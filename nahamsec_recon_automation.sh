@@ -55,7 +55,7 @@ check_dependencies() {
         exit 1
     fi
     
-    log "Todas las dependencias estan instaladas âœ“"
+    log "Todas las dependencias estan instaladas ya"
 }
 
 # Crear estructura de directorios
