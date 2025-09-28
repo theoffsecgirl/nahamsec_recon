@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# NahamSec Pipeline Automation Script v1.1
+# NahamSec Pipeline Automation Script 
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
