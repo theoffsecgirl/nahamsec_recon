@@ -1,122 +1,103 @@
-# Nahamsec Recon Scripts
+```markdown
+# NahamSec Recon Automation Scripts
 
-Colección de *one-liners* y scripts para automatizar el reconocimiento en bug bounty, basados en el workflow de [NahamSec](https://www.youtube.com/watch?v=evyxNUzl-HA).
+Basado en el vídeo: [Free Recon Course and Methodology For Bug Bounty Hunters](https://www.youtube.com/watch?v=evyxNUzl-HA) de NahamSec.
 
-***
+---
 
-## Contenido del Repositorio
+## ¿Qué incluye este repositorio?
 
-*   **`nahamsec_oneliners.md`**: Fichero Markdown con una colección de *one-liners* y pipelines para distintas fases del reconocimiento.
-*   **`nahamsec_quick_oneliner.sh`**: Script de Bash que ejecuta un pipeline de reconocimiento de subdominios.
+- `nahamsec_recon_automation.sh`: Script completo paso a paso para reconocimiento profesional.
+- `nahamsec_recon_pipeline.sh`: Serie de pipelines automatizados desde reconocimiento básico hasta avanzado.
+- `nahamsec_quick_oneliner.sh`: Pipeline rápido con un solo comando (minuto 16 del vídeo).
+- `nahamsec_oneliners.md`: Documentación detallada con todos los comandos y variantes para recon.
 
-***
+---
 
-## Descripción Técnica
+## Por qué usar estos scripts
 
-Este repositorio adapta el workflow de NahamSec para automatizar el descubrimiento de activos. Los scripts encadenan herramientas de reconocimiento (`Subfinder`, `Alterx`, `Httpx`, etc.) mediante *pipes* (`|`) para optimizar el proceso y reducir la intervención manual.
+Estos scripts automatizan con las mejores herramientas (Project Discovery, nmap, Katana...) el descubrimiento de activos, escaneo, probing y crawling. Ideales para bug bounty hunters que quieren ahorrar tiempo y seguir la metodología recomendada por uno de los mejores del sector.
 
-***
+---
 
-## Casos de Uso
+## Requisitos
 
-### `nahamsec_oneliners.md`
+- macOS o Linux
+- Go instalado (`brew install go`)
+- Herramientas de Project Discovery (instalación automática recomendada en los scripts)
+- nmap instalado (`brew install nmap`)
+- wget o curl para descargas
 
-*   **Cuándo usarlo**: Para construir o adaptar cadenas de herramientas complejas. Útil como base de conocimiento y para experimentar con diferentes combinaciones.
-*   **Finalidad**: Sirve como referencia técnica para ejecutar flujos de trabajo específicos o modificar parámetros según el objetivo.
-*   **Contenido**:
-    *   Más de 20 pipelines para descubrimiento, escaneo, *crawling* y filtrado.
-    *   Comandos de instalación de dependencias para macOS/Linux.
-    *   Ejemplos de configuración de claves de API.
+---
 
-### `nahamsec_quick_oneliner.sh`
+## Cómo usar
 
-*   **Cuándo usarlo**: Para una ejecución rápida del pipeline principal de descubrimiento de subdominios contra un objetivo.
-*   **Finalidad**: Implementa la secuencia de descubrimiento, permutación, resolución DNS, *probing* HTTP y *crawling* para obtener una enumeración inicial de activos. Es idóneo para la fase inicial de reconocimiento.
+1. Clona o descarga este repositorio.
+2. Da permisos de ejecución a los scripts:
 
-***
+   ```
+   chmod +x *.sh
+   ```
 
-## Instrucciones de Uso
+3. Ejecuta el script deseado con el dominio objetivo. Ejemplos:
 
-### 1. Instalación de Dependencias
+   - Recon completo profesional:  
+     ```
+     ./recon_automation_fixed.sh example.com
+     ```
+   
+   - Pipelines automatizados:  
+     ```
+     ./pipeline_automation_fixed.sh example.com
+     ```
+   
+   - Pipeline rápido (one-liner):  
+     ```
+     ./quick_oneliner_fixed.sh example.com
+     ```
 
-Ejecuta este bloque si no tienes las herramientas instaladas:
-```bash
-brew install nmap massdns
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
-go install -v github.com/projectdiscovery/alterx/cmd/alterx@latest
-go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-go install -v github.com/projectdiscovery/katana/cmd/katana@latest
-```
+---
 
-### 2. Ejecución del Script Rápido
+## Descarga y uso de wordlists
 
-```bash
-# Asignar permisos de ejecución
-chmod +x nahamsec_quick_oneliner.sh
+Los scripts crean automáticamente la carpeta `wordlists` y descargan las listas principales de subdominios y resolvers para maximizar cobertura.
 
-# Ejecutar contra un dominio
-./nahamsec_quick_oneliner.sh example.com
-```
-
-### 3. Consulta de Pipelines
-
-Para revisar la colección completa de comandos y sus variantes:
-```bash
-cat nahamsec_oneliners.md
-```
-
-***
-
-## Archivos necesarios (Wordlists y estructura)
-
-Para que los scripts funcionen correctamente no basta solo con tener las herramientas instaladas; necesitas ciertos archivos de diccionarios (wordlists) y resolvers para cada fase clave del reconocimiento.
-
-### Estructura recomendada
+Si quieres explorar más wordlists puedes clonar directamente SecLists:
 
 ```
-/scripts/
-  nahamsec_quick_oneliner.sh
-  nahamsec_oneliners.md
-/wordlists/
-  subdomains.txt
-  directories.txt
-  parameters.txt
-  resolvers.txt
+git clone https://github.com/danielmiessler/SecLists.git wordlists/SecLists
 ```
 
-### Wordlists imprescindibles
+---
 
-- **subdomains.txt:** Un diccionario de subdominios, como los de SecLists (`Discovery/DNS/subdomains.txt`) o Assetnote.
-- **resolvers.txt:** Lista de resolvers DNS (vital para herramientas como massdns o shuffledns).
-- **directories.txt:** Wordlist para fuerza bruta de rutas y directorios (por ejemplo, `common.txt` de SecLists).
-- **parameters.txt:** Para fuzzing de parámetros, usuarios, etc.
+## Estructura de directorios creada
 
-### Descargar wordlists recomendados
+```
+recon_example.com/
+├── subdomains/
+├── permutations/
+├── resolved/
+├── ports/
+├── httpx/
+├── content/
+└── wordlists/
+```
 
-- **SecLists:**  
-  ```bash
-  sudo apt install seclists
-  # o bien:
-  git clone https://github.com/danielmiessler/SecLists.git
-  ```
-- **Assetnote Wordlists:**
-  Descargar desde https://wordlists.assetnote.io y elegir los diccionarios adecuados para tu pipeline.
-
-Guarda los diccionarios en `/wordlists/` y, si lo requiere el script, edita la ruta en los comandos para apuntar a tus diccionarios locales.
-
-### Nota
-
-Con solo un diccionario de subdominios, otro de directorios y un resolvers.txt ya puedes lanzar la mayoría de pipelines de reconocimiento típicos. Si quieres ir más allá, añade wordlists para fuzzing o para casos especiales como usuarios y parámetros HTTP.
-
-## Notas Adicionales
-
-*   Revisa el fichero `.md` para entender los parámetros de cada herramienta y adaptar los *pipelines*.
-*   Se recomienda expandir la colección con tus propios *one-liners* a medida que desarrolles tu metodología.
-
-***
+---
 
 ## Créditos
 
-El workflow está basado en el contenido público de NahamSec. Este repositorio es una adaptación para facilitar su implementación.
+- NahamSec, por la metodología y los tutoriales que inspiran estos scripts.
+- Project Discovery, por las herramientas open source de recon.
+- Daniel Miessler y comunidad SecLists, por las wordlists.
+
+---
+
+**Aviso legal:** Usa estos scripts solo en entornos autorizados y para fines legales (bug bounty, pentesting autorizado, formación).
+
+---
+
+# Happy Hunting!
+```
+
+
