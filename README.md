@@ -69,6 +69,47 @@ cat nahamsec_oneliners.md
 
 ***
 
+## Archivos necesarios (Wordlists y estructura)
+
+Para que los scripts funcionen correctamente no basta solo con tener las herramientas instaladas; necesitas ciertos archivos de diccionarios (wordlists) y resolvers para cada fase clave del reconocimiento.
+
+### Estructura recomendada
+
+```
+/scripts/
+  nahamsec_quick_oneliner.sh
+  nahamsec_oneliners.md
+/wordlists/
+  subdomains.txt
+  directories.txt
+  parameters.txt
+  resolvers.txt
+```
+
+### Wordlists imprescindibles
+
+- **subdomains.txt:** Un diccionario de subdominios, como los de SecLists (`Discovery/DNS/subdomains.txt`) o Assetnote.
+- **resolvers.txt:** Lista de resolvers DNS (vital para herramientas como massdns o shuffledns).
+- **directories.txt:** Wordlist para fuerza bruta de rutas y directorios (por ejemplo, `common.txt` de SecLists).
+- **parameters.txt:** Para fuzzing de parámetros, usuarios, etc.
+
+### Descargar wordlists recomendados
+
+- **SecLists:**  
+  ```bash
+  sudo apt install seclists
+  # o bien:
+  git clone https://github.com/danielmiessler/SecLists.git
+  ```
+- **Assetnote Wordlists:**
+  Descargar desde https://wordlists.assetnote.io y elegir los diccionarios adecuados para tu pipeline.
+
+Guarda los diccionarios en `/wordlists/` y, si lo requiere el script, edita la ruta en los comandos para apuntar a tus diccionarios locales.
+
+### Nota
+
+Con solo un diccionario de subdominios, otro de directorios y un resolvers.txt ya puedes lanzar la mayoría de pipelines de reconocimiento típicos. Si quieres ir más allá, añade wordlists para fuzzing o para casos especiales como usuarios y parámetros HTTP.
+
 ## Notas Adicionales
 
 *   Revisa el fichero `.md` para entender los parámetros de cada herramienta y adaptar los *pipelines*.
