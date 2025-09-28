@@ -120,4 +120,3 @@ Con solo un diccionario de subdominios, otro de directorios y un resolvers.txt y
 ## Créditos
 
 El workflow está basado en el contenido público de NahamSec. Este repositorio es una adaptación para facilitar su implementación.
-
